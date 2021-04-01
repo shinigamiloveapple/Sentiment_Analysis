@@ -9,6 +9,8 @@ from nltk.stem import WordNetLemmatizer
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 
+token_path = "C:/Users/RYuK/NewTweetAnalysis/tokenizer.pickle"
+
 #Loading model
 model = load_model("C:/Users/RYuK/SentAnalysiModel01.h5")
 history = pickle.load(open("C:/Users/RYuK/SentAnalysiHistory.p", 'rb'))
@@ -62,8 +64,8 @@ def clean_sentences(sentence):
     
     return(lines)
 
-def tokenize(lines):
-    tokenized = Tokenizer(num_words= 472962,oov_token="<oov>")
+def tokenize(lines,token_path):
+    tokenized = pickle.load(open(token_path, 'rb'))
     tokenized.fit_on_texts(lines)
     word_index = tokenized.word_index
     lines = tokenized.texts_to_sequences(lines)
@@ -73,14 +75,16 @@ def tokenize(lines):
 def prediction(text):
     x = text
     x_review = clean_sentences(x)
-    x_token = tokenize(x_review)
-    preds = np.argmax(model.predict(x_token), axis=-1)
+    x_token = tokenize(x_review,token_path)
+    preds = model.predict(x_token)
 
     return preds
 
+
+
 if __name__ == "__main__":
     text = [
-        "Tenet is a bad movie"
+        "Tenet is a good movie"
         ]
 
 print(prediction(text))
