@@ -13,7 +13,7 @@ def send_req(x):
 
 
 st.write("""
-# Text aspect extraction app
+# Sentiment Analysis
 """)
 
 
