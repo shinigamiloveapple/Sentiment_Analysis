@@ -9,16 +9,13 @@ def predict(text):
     doc = nlp(text)
     polar = doc._.sentiment.polarity
 
-    def sentiment(polarity):
+    def sentiment(polarity):  # Setting a threshold on polarity.
         if doc._.sentiment.polarity > 0:
             return 'Positive'
-        if doc._.sentiment.polarity == 0:
+        elif doc._.sentiment.polarity == 0:
             return 'Neutral'
-        if doc._.sentiment.polarity < 0:
+        else:
             return 'Negative'
         
 
     return(sentiment(polar))
-
-
-
